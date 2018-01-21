@@ -63,6 +63,7 @@ public class Test extends AppCompatActivity {
     private RadioGroup[] rdg = new RadioGroup[50];
     String answers;
     Integer id;
+    String monhoc="anhvan";
     int clock;
     String scored;
     String duongdandethi,Link;
@@ -101,8 +102,8 @@ public class Test extends AppCompatActivity {
         dialognew = new DialogStart(Test.this);
 
         anhxa();
-//        initquiztimescore(monhoc);
-        countup();
+        initquiztimescore(monhoc);
+
         CDTimer();
         openCustomDialog();
         radiogroup();
@@ -113,6 +114,7 @@ public class Test extends AppCompatActivity {
         autoCheck();
         Nav();
         ClickClock();
+        countup();
     }
     public void getlink(){
         String type = "load";
