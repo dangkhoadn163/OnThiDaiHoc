@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/drawer_layout"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="com.example.msi.onthidaihoc.Activity.Score">
+<!-- The ActionBar -->
+<LinearLayout
+    android:id="@+id/linearlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/LinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_score"
+            android:layout_width="200dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_score"
+            android:fontFamily="serif"
+            android:gravity="center"
+            android:text="10"
+            android:textAllCaps="false"
+            android:textColor="#00838f"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:typeface="serif" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:tabGravity="center"
+                app:tabMode="fixed" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+
+<android.support.design.widget.NavigationView
+    android:id="@+id/nvcView"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:layout_gravity="start"
+    android:background="@android:color/white">
+    <include layout="@layout/nav_score" />
+</android.support.design.widget.NavigationView>
+</android.support.v4.widget.DrawerLayout>
+
+

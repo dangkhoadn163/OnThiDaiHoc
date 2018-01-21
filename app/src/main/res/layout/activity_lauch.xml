@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/colorBlack"
+    tools:context="com.example.msi.onthidaihoc.Activity.LauchActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/emailuser"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/bg_edt2"
+                android:drawableRight="@drawable/ic_mail"
+                android:hint="Email"
+                android:text="dangkhoadn163@gmail.com"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="10dp"
+                android:paddingRight="20dp"
+                android:textColor="@color/colorWhite" />
+
+            <EditText
+                android:id="@+id/passuser"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bg_edt2"
+                android:drawableRight="@drawable/ic_lock"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:text="123456"
+                android:paddingLeft="10dp"
+                android:paddingRight="20dp"
+                android:textColor="@color/colorWhite" />
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/loginuser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="login"
+        android:textStyle="bold"
+        android:textColor="@color/colorYellow"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/bg_btn"/>
+    <Button
+        android:id="@+id/registeruser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="register"
+        android:textStyle="bold"
+        android:textColor="@color/colorWhite"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/bg_btn1"/>
+    <Button
+        android:id="@+id/forgetpass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="forget password"
+        android:textStyle="bold"
+        android:textColor="@color/colorGreen"
+        android:background="@drawable/bg_btn2"/>
+
+</LinearLayout>
+
+
+

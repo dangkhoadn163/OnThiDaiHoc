@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:padding="4dp"
+    app:cardCornerRadius="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imvHinhAnh"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:adjustViewBounds="true"
+            android:fitsSystemWindows="true"
+            android:scaleType="fitXY"
+            android:text="data"
+            android:background="@color/colorBlue"
+            android:textColor="#FFF"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txvTen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ten"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txvKhuvuc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="khu vuc"
+            android:layout_marginLeft="20dp"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/txvNam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="nam"
+            android:layout_marginLeft="20dp"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/txvLan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lan"
+            android:layout_marginLeft="20dp"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/txvId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="id"
+            android:layout_marginLeft="20dp"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+
+
+
+
+</android.support.v7.widget.CardView>
