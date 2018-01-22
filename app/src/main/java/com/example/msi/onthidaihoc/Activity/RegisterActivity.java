@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.msi.onthidaihoc.Class.BackgroundWoker;
+import com.example.msi.onthidaihoc.Class.MD5;
 import com.example.msi.onthidaihoc.Class.RegularExpressions;
 import com.example.msi.onthidaihoc.R;
 
@@ -20,6 +21,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText edtPass;
     EditText edtEmail;
     Button btnConfirm;
+    String encodepassword;
     String REGEX="\\w+@\\w+[.]\\w+([.]\\w+)?";
 
     RegularExpressions CheckEmail;
@@ -33,21 +35,31 @@ public class RegisterActivity extends AppCompatActivity {
         btnConfirm=(Button) findViewById(R.id.confirmuser);
         click();
     }
+    public void encodepass(){
+        MD5 md5 = new MD5();
+        if(edtPass.getText().equals("")){
+            Toast.makeText(this, "Vui lòng nhập đầy dủ thông tin!", Toast.LENGTH_SHORT).show();
+        }else {
+            encodepassword=md5.encryption(edtPass.getText().toString());
+            Log.d("encode",""+encodepassword);
+        }
+
+    }
     public void click(){
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
 
             public void onClick(View view) {
                 String INPUT= edtEmail.getText().toString();
+                CheckEmail= new RegularExpressions();
                 if(edtPass.getText().toString().equals("")||edtName.getText().toString().equals("")||CheckEmail.check(REGEX,INPUT)==false){
-                    CheckEmail= new RegularExpressions();
-
                     Log.d("DK","email: "+INPUT);
                 }
                 else {
+                    encodepass();
                     String name = edtName.getText().toString();
                     String email = edtEmail.getText().toString();
-                    String pass = edtPass.getText().toString();
+                    String pass = encodepassword;
                     String type = "register";
                     BackgroundWoker backgroundWoker = new BackgroundWoker(RegisterActivity.this, new BackgroundWoker.AsyncResponse() {
                         @Override
@@ -56,8 +68,6 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
                     backgroundWoker.execute(type, name, email, pass);
-                    Toast.makeText(RegisterActivity.this, "1111", Toast.LENGTH_SHORT).show();
-
                 }
             }
         });

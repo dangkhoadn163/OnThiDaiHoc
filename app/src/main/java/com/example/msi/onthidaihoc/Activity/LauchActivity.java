@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 
 import com.example.msi.onthidaihoc.Class.BackgroundWoker;
+import com.example.msi.onthidaihoc.Class.MD5;
 import com.example.msi.onthidaihoc.R;
 
 
@@ -19,6 +20,7 @@ public class LauchActivity extends AppCompatActivity {
     static EditText edtemailuser;
     String checklogin;
     EditText edtpassuser;
+    String encodepass;
     Button btnlogin,btnregister,btnforgetpass;
 
     @Override
@@ -31,8 +33,16 @@ public class LauchActivity extends AppCompatActivity {
         btnregister=(Button)findViewById(R.id.registeruser);
         click();
 
+    }
+    public void encodepass(){
+        MD5 md5 = new MD5();
+        if(edtpassuser.getText().toString().equals("")){
+            Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
 
-
+        }else{
+            encodepass=md5.encryption(edtpassuser.getText().toString());
+            Log.d("encode",""+encodepass);
+        }
 
     }
     public void click(){
@@ -44,8 +54,9 @@ public class LauchActivity extends AppCompatActivity {
                     return;
                 }
                 else {
+                    encodepass();
                     String ten_user = edtemailuser.getText().toString();
-                    String matkhau_user = edtpassuser.getText().toString();
+                    String matkhau_user = encodepass;
                     String type = "login";
                     BackgroundWoker backgroundWoker = new BackgroundWoker(LauchActivity.this, new BackgroundWoker.AsyncResponse() {
                         @Override

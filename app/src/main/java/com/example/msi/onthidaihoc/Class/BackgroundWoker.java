@@ -160,7 +160,7 @@ public class BackgroundWoker extends AsyncTask<String,Void,String> {
     @Override
     protected void onPostExecute(String result) {
         delegate.processFinish(result);
-        Toast.makeText(context, "iiiiiiiiiiiii"+result, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "php trả kết quả: "+result, Toast.LENGTH_SHORT).show();
     }
 
     @Override
