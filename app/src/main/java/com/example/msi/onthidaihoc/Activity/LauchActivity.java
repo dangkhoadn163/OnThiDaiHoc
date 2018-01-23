@@ -80,12 +80,12 @@ public class LauchActivity extends AppCompatActivity {
         });
     }
     public void changeActive(){
-        if(checklogin.equals("login success !!!!! Welcome user")){
-            Intent i= new Intent(LauchActivity.this,ListTest.class);
+        if(checklogin.equals("login success !!!!! Welcome user1")){
+            Intent i= new Intent(LauchActivity.this,ChooseActivity.class);
             LauchActivity.this.startActivity(i);
         }
         else {
-            Toast.makeText(this, "Vui lòng kiểm tra lại thông tin đăng nhập!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "not sucess! ", Toast.LENGTH_SHORT).show();
         }
 
 

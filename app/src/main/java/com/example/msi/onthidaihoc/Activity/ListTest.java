@@ -17,6 +17,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.msi.onthidaihoc.Class.BackgroundWoker;
+import com.example.msi.onthidaihoc.FolderMoi.Moi;
 import com.example.msi.onthidaihoc.MyFile.MyFile;
 import com.example.msi.onthidaihoc.MyFile.MyFileAdapter;
 import com.example.msi.onthidaihoc.MyFile.MyFileViewHolder;
@@ -38,22 +40,118 @@ public class ListTest extends AppCompatActivity {
     MyFileAdapter adapter;
     ArrayList<String> dethi;
     private RecyclerView rcvData;
-    String uid,monhoc;
+    String monhoc;
     Toolbar toolbar;
     Integer Id_dethi;
-    String Ten_dethi,Khuvuc_dethi,Nam_dethi,Lan_dethi;
+    String Ten_dethi,Khuvuc_dethi,Nam_dethi,Lan_dethi,dethimon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_test);
-        Log.d("Uid1", "onComplete: Uid=" + uid);
+        monhoc = getIntent().getExtras().getString("monhoc");
         anhXa();
         Nav();
-        loadList();
+//        loadList();
+        getmon();
         search();
-
     }
     public  static final String TAG = ListTest.class.getSimpleName();
+    public void setidmonmySQL(){
+        if(monhoc.equals("anhvan")){
+            monhoc="1";
+        }else if(monhoc.equals("hoahoc")){
+            monhoc="2";
+        }else if(monhoc.equals("lichsu")){
+            monhoc="3";
+        }else if(monhoc.equals("vatly")){
+            monhoc="4";
+        }else if(monhoc.equals("dialy")){
+            monhoc="5";
+        }else if(monhoc.equals("sinhhoc")){
+            monhoc="6";
+        }else if(monhoc.equals("toanhoc")){
+            monhoc="7";
+        }else if(monhoc.equals("gdcd")){
+            monhoc="8";
+        }
+    }
+    public void setmonapp(){
+        if(monhoc.equals("1")){
+            monhoc="anhvan";
+        }else if(monhoc.equals("2")){
+            monhoc="hoahoc";
+        }else if(monhoc.equals("3")){
+            monhoc="lichsu";
+        }else if(monhoc.equals("4")){
+            monhoc="vatly";
+        }else if(monhoc.equals("5")){
+            monhoc="dialy";
+        }else if(monhoc.equals("6")){
+            monhoc="sinhhoc";
+        }else if(monhoc.equals("7")){
+            monhoc="toanhoc";
+        }else if(monhoc.equals("8")){
+            monhoc="gdcd";
+        }
+    }
+    public void getmon(){
+        setidmonmySQL();
+        String type = "getmon";
+        BackgroundWoker backgroundWoker = new BackgroundWoker(ListTest.this, new BackgroundWoker.AsyncResponse() {
+            @Override
+            public void processFinish(String output) {
+                Toast.makeText(ListTest.this, ""+output, Toast.LENGTH_SHORT).show();
+                dethimon=output;
+                load();
+            }
+        });
+        backgroundWoker.execute(type,monhoc);
+    }
+    public void load(){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        for (int i = 0; i < dethimon.length(); i++) {
+            if (dethimon != null) {
+                try {
+                    JSONArray jsonArray = new JSONArray(dethimon);
+                    JSONObject index = jsonArray.getJSONObject(i);
+                    Id_dethi = index.getInt("Id");
+                    Ten_dethi = index.getString("Ten");
+                    Khuvuc_dethi = index.getString("Khuvuc");
+                    Nam_dethi = index.getString("Nam");
+                    Lan_dethi = index.getString("Lan");
+                    MyFileViewHolder viewHolder;
+                    final MyFile model = new MyFile();
+                    model.id = Id_dethi;
+                    model.ten = Ten_dethi;
+                    model.khuvuc = Khuvuc_dethi;
+                    model.nam = Nam_dethi;
+                    model.lan = Lan_dethi;
+                    files.add(model);
+                    adapter.notifyDataSetChanged();
+                    adapter.setOnItemClickListener(new MyFileAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View itemView, int position) {
+                            setmonapp();
+                            model.id = files.get(position).id;
+                            Intent intent= new Intent(ListTest.this,Test.class);
+                            Log.d("postion", position + "/" + "/" + model.id);
+                            intent.putExtra("id_dethi", model.id);
+                            intent.putExtra("monhoc", monhoc);
+                            ListTest.this.startActivity(intent);
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                adapter.setfilter(files);
+                rcvData.setAdapter(adapter);
+                rcvData.invalidate();
+            }
+            else{
+                Toast.makeText(ListTest.this, "Không có dữ liệu!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
     private void loadList()
     {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -86,7 +184,7 @@ public class ListTest extends AppCompatActivity {
                                     model.id = files.get(position).id;
                                     Intent intent= new Intent(ListTest.this,Test.class);
                                     Log.d("postion", position + "/" + "/" + model.id);
-                                    intent.putExtra("id___dethi", model.id);
+                                    intent.putExtra("id_dethi", model.id);
                                     ListTest.this.startActivity(intent);
                                 }
                             });

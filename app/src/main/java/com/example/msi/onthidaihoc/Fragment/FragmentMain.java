@@ -16,7 +16,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class FragmentMain extends Fragment {
 /*    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();*/
-    String uid;
     String monhoc;
     private Button btnmath, btnenglish, btnbiology, btnchemistry, btnphysic, btnedu, btnhistoty
             , btngeography;
@@ -24,7 +23,6 @@ public class FragmentMain extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragmentmain,container,false);
-        uid = getActivity().getIntent().getExtras().getString("Uid");
         btnenglish = (Button)view.findViewById(R.id.btn_english);
         btnphysic= (Button)view.findViewById(R.id.btn_physic);
         btnchemistry=(Button)view.findViewById(R.id.btn_chemistry);
@@ -51,7 +49,6 @@ public class FragmentMain extends Fragment {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 monhoc = "anhvan";
                 intent.putExtra("monhoc", monhoc);
-                intent.putExtra("Uid", uid);
                 getActivity().startActivity(intent);
             }
         });
@@ -59,26 +56,22 @@ public class FragmentMain extends Fragment {
 
     public void vatly() {
         btnphysic.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 monhoc = "vatly";
                 intent.putExtra("monhoc", monhoc);
-                intent.putExtra("Uid", uid);
                 getActivity().startActivity(intent);
             }
         });
     }
     public void hoahoc() {
         btnchemistry.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 monhoc = "hoahoc";
                 intent.putExtra("monhoc", monhoc);
-                intent.putExtra("Uid", uid);
                 getActivity().startActivity(intent);
             }
         });
@@ -90,33 +83,28 @@ public class FragmentMain extends Fragment {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 monhoc = "dialy";
                 intent.putExtra("monhoc", monhoc);
-                intent.putExtra("Uid", uid);
                 getActivity().startActivity(intent);
             }
         });
     }
     public void lichsu() {
         btnhistoty.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 monhoc = "lichsu";
                 intent.putExtra("monhoc", monhoc);
-                intent.putExtra("Uid", uid);
                 getActivity().startActivity(intent);
             }
         });
     }
     public void sinhhoc() {
         btnbiology.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 monhoc = "sinhhoc";
                 intent.putExtra("monhoc", monhoc);
-                intent.putExtra("Uid", uid);
                 getActivity().startActivity(intent);
             }
         });
@@ -137,7 +125,6 @@ public class FragmentMain extends Fragment {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 monhoc = "toanhoc";
                 intent.putExtra("monhoc", monhoc);
-                intent.putExtra("Uid", uid);
                 getActivity().startActivity(intent);
             }
         });

@@ -63,7 +63,7 @@ public class Test extends AppCompatActivity {
     private RadioGroup[] rdg = new RadioGroup[50];
     String answers;
     Integer id;
-    String monhoc="anhvan";
+    String monhoc="";
     int clock;
     String scored;
     String duongdandethi,Link;
@@ -96,7 +96,8 @@ public class Test extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        id = getIntent().getExtras().getInt("id");
+        monhoc = getIntent().getExtras().getString("monhoc");
+        id = getIntent().getExtras().getInt("id_dethi");
         clock=1;
         progressBar = (ProgressBar)findViewById(R.id.progressBar1);
         dialognew = new DialogStart(Test.this);
@@ -150,7 +151,18 @@ public class Test extends AppCompatActivity {
                 }
             }
         }
-
+    public void loadsaveanswers(){
+        String idquantri="1";
+        String answersuser = saveanswers;
+        String type = "loadsaveanswers";
+        BackgroundWoker backgroundWoker = new BackgroundWoker(Test.this, new BackgroundWoker.AsyncResponse() {
+            @Override
+            public void processFinish(String output) {
+                Toast.makeText(Test.this, ""+output, Toast.LENGTH_SHORT).show();
+            }
+        });
+        backgroundWoker.execute(type, idquantri);
+    }
     void autoCheck()
     {
         for(int i = 0; i < countquiz; i++)
@@ -229,18 +241,7 @@ public class Test extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 Toast.makeText(Test.this, "Điểm của bạn là: " + score, Toast.LENGTH_SHORT).show();
 //                        Log.d("Score", score + "");
-
-
-
-
-
-
-//                loadsaveanswers();
-
-
-
-
-
+                loadsaveanswers();
                 Intent intent= new Intent(Test.this,Score.class);
                 intent.putExtra("id",id);
                 Test.this.startActivity(intent);
@@ -367,13 +368,7 @@ public class Test extends AppCompatActivity {
         Log.d("timeup", saveanswers);
         scored= score+"";
         Log.d("score0", scored);
-
-
-
-//        loadsaveanswers();
-
-
-
+        loadsaveanswers();
     }
     private void initquiztimescore(String monhoc)
     {
@@ -439,7 +434,7 @@ public class Test extends AppCompatActivity {
                 Toast.makeText(Test.this, "Điểm của bạn là: " + score, Toast.LENGTH_SHORT).show();
                 Intent intent= new Intent(Test.this,Score.class);
                 intent.putExtra("id", id);
-                intent.putExtra("monhoc", "anhvan");
+                intent.putExtra("monhoc", monhoc);
                 Test.this.startActivity(intent);
             }
         };

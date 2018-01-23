@@ -13,7 +13,6 @@ import com.example.msi.onthidaihoc.R;
 
 
 public class MainActivity extends AppCompatActivity {
-    String uid;
     String monhoc;
     Toolbar toolbar;
     private Button btndethi,btnbaitap,btntailieu;
@@ -23,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        uid = getIntent().getExtras().getString("Uid");
         monhoc = getIntent().getExtras().getString("monhoc");
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         Anhxa ();
@@ -83,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent= new Intent(MainActivity.this,ListTest.class);
                 intent.putExtra("monhoc",monhoc);
-                intent.putExtra("Uid", uid);
                 MainActivity.this.startActivity(intent);
             }
         });

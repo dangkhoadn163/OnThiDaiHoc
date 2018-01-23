@@ -46,8 +46,10 @@ public class BackgroundWoker extends AsyncTask<String,Void,String> {
 /*        String login_url = "http://192.168.100.2:81/onthidh/login.php";
         String register_url = "http://192.168.100.2:81/onthidh/register.php";*/
         String login_url = "http://khoaduong007.000webhostapp.com/login.php";
-        String register_url = "http://khoaduong007.000webhostapp.com/register.php";
+        String register_url = "https://khoaduong007.000webhostapp.com/register.php";
         String load_url = "http://khoaduong007.000webhostapp.com/duongdandendethi.php";
+        String getmon_url = "http://khoaduong007.000webhostapp.com/getnametest.php";
+        String loadanswersuser_url = "http://khoaduong007.000webhostapp.com/loadanswersuser.php";
 
         if(type.equals("login")) {
             try {
@@ -128,6 +130,68 @@ public class BackgroundWoker extends AsyncTask<String,Void,String> {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String post_data = URLEncoder.encode("id_dethi","UTF-8")+"="+URLEncoder.encode(id_dethi,"UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                String result="";
+                String line="";
+                while((line = bufferedReader.readLine())!= null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if(type.equals("getmon")){
+            try {
+                String id_monhoc = params[1];
+                URL url = new URL(getmon_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("id_monhoc","UTF-8")+"="+URLEncoder.encode(id_monhoc,"UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                String result="";
+                String line="";
+                while((line = bufferedReader.readLine())!= null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if(type.equals("loadsaveanswers")) {
+            try {
+                String id_quantri = params[1];
+                URL url = new URL(register_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("id_quantri","UTF-8")+"="+URLEncoder.encode(id_quantri,"UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();

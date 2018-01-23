@@ -65,8 +65,8 @@ public class ChooseActivity extends AppCompatActivity {
 /*        mAuth = FirebaseAuth.getInstance();
         rootDatabase = FirebaseDatabase.getInstance().getReference();
         uid = getIntent().getExtras().getString("Uid");*/
-        Log.d("uuuuuuuuu",""+uid);
         anhxa();
+        nav();
 /*        loadnameuser(uid);*/
 
 
