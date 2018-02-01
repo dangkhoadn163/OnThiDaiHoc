@@ -10,15 +10,17 @@ public class MyFile {
     public String khuvuc;
     public String nam;
     public String lan;
+    public String dapan;
 
     public MyFile() {
     }
 
-    public MyFile(Integer id,String ten, String khuvuc, String nam, String lan) {
+    public MyFile(Integer id,String ten, String khuvuc, String nam, String lan,String dapan) {
         this.id=id;
         this.ten = ten;
         this.khuvuc = khuvuc;
         this.nam = nam;
         this.lan = lan;
+        this.dapan = dapan;
     }
 }

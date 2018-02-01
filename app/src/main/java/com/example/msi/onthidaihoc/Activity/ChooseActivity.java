@@ -62,6 +62,7 @@ public class ChooseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose);
+        uid = getIntent().getExtras().getString("iduser");
 /*        mAuth = FirebaseAuth.getInstance();
         rootDatabase = FirebaseDatabase.getInstance().getReference();
         uid = getIntent().getExtras().getString("Uid");*/

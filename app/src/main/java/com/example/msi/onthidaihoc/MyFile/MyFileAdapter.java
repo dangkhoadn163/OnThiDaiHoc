@@ -55,7 +55,7 @@ public class MyFileAdapter extends RecyclerView.Adapter<MyFileAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView txtid,txtten,txtkhuvuc,txtnam,txtlan;
+        public TextView txtid,txtten,txtkhuvuc,txtnam,txtlan,txtdapan;
         public ViewHolder(final View itemView) {
             super(itemView);
             txtid = (TextView) itemView.findViewById(R.id.txvId);
@@ -63,6 +63,7 @@ public class MyFileAdapter extends RecyclerView.Adapter<MyFileAdapter.ViewHolder
             txtkhuvuc = (TextView) itemView.findViewById(R.id.txvKhuvuc);
             txtnam = (TextView) itemView.findViewById(R.id.txvNam);
             txtlan = (TextView) itemView.findViewById(R.id.txvLan);
+            txtdapan = (TextView) itemView.findViewById(R.id.txvDapan);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

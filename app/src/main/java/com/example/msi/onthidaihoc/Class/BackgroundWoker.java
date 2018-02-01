@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.StringRequest;
 import com.example.msi.onthidaihoc.Activity.ChooseActivity;
 import com.example.msi.onthidaihoc.Activity.LauchActivity;
 import com.example.msi.onthidaihoc.Activity.ListTest;
@@ -43,13 +44,18 @@ public class BackgroundWoker extends AsyncTask<String,Void,String> {
     @Override
     protected String doInBackground(String... params) {
         String type = params[0];
-/*        String login_url = "http://192.168.100.2:81/onthidh/login.php";
-        String register_url = "http://192.168.100.2:81/onthidh/register.php";*/
-        String login_url = "http://khoaduong007.000webhostapp.com/login.php";
+         String  login_url = new String(Server.URL_LOGIN);
+        String register_url = new String(Server.URL_REGISTER);
+        String load_url = new String(Server.URL_LOAD);
+        String getmon_url = new String(Server.URL_GETMON);
+        String loadanswersuser_url = new String(Server.URL_LOADANSWERUSER);
+        String getketquathi_url = new String(Server.URL_GETKETQUATHI);
+        /*String login_url = "http://khoaduong007.000webhostapp.com/login.php";
         String register_url = "https://khoaduong007.000webhostapp.com/register.php";
         String load_url = "http://khoaduong007.000webhostapp.com/duongdandendethi.php";
         String getmon_url = "http://khoaduong007.000webhostapp.com/getnametest.php";
-        String loadanswersuser_url = "http://khoaduong007.000webhostapp.com/loadanswersuser.php";
+        String loadanswersuser_url = "http://khoaduong007.000webhostapp.com/ketquathi.php";
+        String getketquathi_url = "http://khoaduong007.000webhostapp.com/getketquathi.php";*/
 
         if(type.equals("login")) {
             try {
@@ -181,17 +187,93 @@ public class BackgroundWoker extends AsyncTask<String,Void,String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else if(type.equals("loadsaveanswers")) {
+        }else if(type.equals("getdethi")){
             try {
-                String id_quantri = params[1];
-                URL url = new URL(register_url);
+                String id = params[1];
+                String id_monhoc = params[2];
+                URL url = new URL(getmon_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("id_quantri","UTF-8")+"="+URLEncoder.encode(id_quantri,"UTF-8");
+                String post_data = URLEncoder.encode("id","UTF-8")+"="+URLEncoder.encode(id,"UTF-8")+"&"
+                        +URLEncoder.encode("id_monhoc","UTF-8")+"="+URLEncoder.encode(id_monhoc,"UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                String result="";
+                String line="";
+                while((line = bufferedReader.readLine())!= null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if(type.equals("getketquathi")){
+            try {
+                String id_dethi = params[1];
+                String id_user = params[2];
+                String id_monhoc = params[3];
+                URL url = new URL(getketquathi_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("id_dethi","UTF-8")+"="+URLEncoder.encode(id_dethi,"UTF-8")+"&"
+                        +URLEncoder.encode("id_user","UTF-8")+"="+URLEncoder.encode(id_user,"UTF-8")+"&"
+                        +URLEncoder.encode("id_monhoc","UTF-8")+"="+URLEncoder.encode(id_monhoc,"UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                String result="";
+                String line="";
+                while((line = bufferedReader.readLine())!= null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if(type.equals("loadsaveanswers")) {
+            try {
+                String id = params[1];
+                String uid = params[2];
+                String monhoc = params[3];
+                String scored = params[4];
+                String answeruser = params[5];
+                URL url = new URL(loadanswersuser_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("id","UTF-8")+"="+URLEncoder.encode(id,"UTF-8")+"&"
+                        +URLEncoder.encode("uid","UTF-8")+"="+URLEncoder.encode(uid,"UTF-8")+"&"
+                        +URLEncoder.encode("monhoc","UTF-8")+"="+URLEncoder.encode(monhoc,"UTF-8")+"&"
+                        +URLEncoder.encode("scored","UTF-8")+"="+URLEncoder.encode(scored,"UTF-8")+"&"
+                        +URLEncoder.encode("answeruser","UTF-8")+"="+URLEncoder.encode(answeruser,"UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();

@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 public final class MyFileViewHolder extends RecyclerView.ViewHolder {
 
 /*    public ImageView imvHinhAnh;*/
-    public TextView txvId,txvTen,txvKhuvuc,txvNam,txvLan;
+    public TextView txvId,txvTen,txvKhuvuc,txvNam,txvLan,txvDapan;
 
     public MyFileViewHolder(View itemView) {
         super(itemView);
@@ -29,6 +29,7 @@ public final class MyFileViewHolder extends RecyclerView.ViewHolder {
         this.txvKhuvuc = (TextView) itemView.findViewById(R.id.txvKhuvuc);
         this.txvNam=(TextView)itemView.findViewById(R.id.txvNam);
         this.txvLan=(TextView)itemView.findViewById(R.id.txvLan);
+        this.txvDapan=(TextView)itemView.findViewById(R.id.txvDapan);
 
     }
     public void loadHinhAnh(Context context, String duongDan) {
@@ -48,8 +49,10 @@ public final class MyFileViewHolder extends RecyclerView.ViewHolder {
         txvNam.setText(nam);
     }
     public void loadLan(String lan) {
-
         txvLan.setText(lan);
+    }
+    public void loadDapan(String dapan) {
+        txvDapan.setText(dapan);
     }
     public void setActionClick(final String t){
         itemView.setOnClickListener(new View.OnClickListener() {

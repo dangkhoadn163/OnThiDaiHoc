@@ -41,14 +41,17 @@ public class ListTest extends AppCompatActivity {
     ArrayList<String> dethi;
     private RecyclerView rcvData;
     String monhoc;
+    String uid;
+    int idmonhoc;
     Toolbar toolbar;
-    Integer Id_dethi;
-    String Ten_dethi,Khuvuc_dethi,Nam_dethi,Lan_dethi,dethimon;
+    int Id_dethi;
+    String Ten_dethi,Khuvuc_dethi,Nam_dethi,Lan_dethi,Dapan_dethi,dethimon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_test);
         monhoc = getIntent().getExtras().getString("monhoc");
+        uid = getIntent().getExtras().getString("iduser");
         anhXa();
         Nav();
 //        loadList();
@@ -58,40 +61,21 @@ public class ListTest extends AppCompatActivity {
     public  static final String TAG = ListTest.class.getSimpleName();
     public void setidmonmySQL(){
         if(monhoc.equals("anhvan")){
-            monhoc="1";
+            idmonhoc=1;
         }else if(monhoc.equals("hoahoc")){
-            monhoc="2";
+            idmonhoc=2;
         }else if(monhoc.equals("lichsu")){
-            monhoc="3";
+            idmonhoc=3;
         }else if(monhoc.equals("vatly")){
-            monhoc="4";
+            idmonhoc=4;
         }else if(monhoc.equals("dialy")){
-            monhoc="5";
+            idmonhoc=5;
         }else if(monhoc.equals("sinhhoc")){
-            monhoc="6";
+            idmonhoc=6;
         }else if(monhoc.equals("toanhoc")){
-            monhoc="7";
+            idmonhoc=7;
         }else if(monhoc.equals("gdcd")){
-            monhoc="8";
-        }
-    }
-    public void setmonapp(){
-        if(monhoc.equals("1")){
-            monhoc="anhvan";
-        }else if(monhoc.equals("2")){
-            monhoc="hoahoc";
-        }else if(monhoc.equals("3")){
-            monhoc="lichsu";
-        }else if(monhoc.equals("4")){
-            monhoc="vatly";
-        }else if(monhoc.equals("5")){
-            monhoc="dialy";
-        }else if(monhoc.equals("6")){
-            monhoc="sinhhoc";
-        }else if(monhoc.equals("7")){
-            monhoc="toanhoc";
-        }else if(monhoc.equals("8")){
-            monhoc="gdcd";
+            idmonhoc=8;
         }
     }
     public void getmon(){
@@ -100,12 +84,11 @@ public class ListTest extends AppCompatActivity {
         BackgroundWoker backgroundWoker = new BackgroundWoker(ListTest.this, new BackgroundWoker.AsyncResponse() {
             @Override
             public void processFinish(String output) {
-                Toast.makeText(ListTest.this, ""+output, Toast.LENGTH_SHORT).show();
                 dethimon=output;
                 load();
             }
         });
-        backgroundWoker.execute(type,monhoc);
+        backgroundWoker.execute(type,idmonhoc+"");
     }
     public void load(){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -119,6 +102,7 @@ public class ListTest extends AppCompatActivity {
                     Khuvuc_dethi = index.getString("Khuvuc");
                     Nam_dethi = index.getString("Nam");
                     Lan_dethi = index.getString("Lan");
+                    Dapan_dethi = index.getString("Dapan");
                     MyFileViewHolder viewHolder;
                     final MyFile model = new MyFile();
                     model.id = Id_dethi;
@@ -126,17 +110,19 @@ public class ListTest extends AppCompatActivity {
                     model.khuvuc = Khuvuc_dethi;
                     model.nam = Nam_dethi;
                     model.lan = Lan_dethi;
+                    model.dapan = Dapan_dethi;
                     files.add(model);
                     adapter.notifyDataSetChanged();
                     adapter.setOnItemClickListener(new MyFileAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(View itemView, int position) {
-                            setmonapp();
                             model.id = files.get(position).id;
                             Intent intent= new Intent(ListTest.this,Test.class);
                             Log.d("postion", position + "/" + "/" + model.id);
                             intent.putExtra("id_dethi", model.id);
-                            intent.putExtra("monhoc", monhoc);
+                            intent.putExtra("idmonhoc", idmonhoc);
+                            intent.putExtra("iduser", uid);
+                            intent.putExtra("dapan", model.dapan);
                             ListTest.this.startActivity(intent);
                         }
                     });
@@ -152,66 +138,6 @@ public class ListTest extends AppCompatActivity {
             }
         }
     }
-    private void loadList()
-    {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest("http://khoaduong007.000webhostapp.com/getnametest.php", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                for(int i=0; i<response.length();i++){
-                    if(response != null){
-                        try {
-                            JSONArray jsonArray = new JSONArray(response);
-                            JSONObject index = jsonArray.getJSONObject(i);
-                            Id_dethi = index.getInt("Id");
-                            Ten_dethi = index.getString("Ten");
-                            Khuvuc_dethi = index.getString("Khuvuc");
-                            Nam_dethi = index.getString("Nam");
-                            Lan_dethi = index.getString("Lan");
-                            MyFileViewHolder viewHolder;
-                            final MyFile model = new MyFile();
-                            model.id = Id_dethi;
-                            model.ten = Ten_dethi;
-                            model.khuvuc = Khuvuc_dethi;
-                            model.nam = Nam_dethi;
-                            model.lan = Lan_dethi;
-                            files.add(model);
-                            Log.d("DK","ten: "+Ten_dethi);
-                            adapter.notifyDataSetChanged();
-                            adapter.setOnItemClickListener(new MyFileAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View itemView, int position) {
-                                    model.id = files.get(position).id;
-                                    Intent intent= new Intent(ListTest.this,Test.class);
-                                    Log.d("postion", position + "/" + "/" + model.id);
-                                    intent.putExtra("id_dethi", model.id);
-                                    ListTest.this.startActivity(intent);
-                                }
-                            });
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        adapter.setfilter(files);
-                        rcvData.setAdapter(adapter);
-                        rcvData.invalidate();
-                    }
-                    else{
-                        Toast.makeText(ListTest.this, "Không có dữ liệu!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ListTest.this, "Kiểm tra kết nối!", Toast.LENGTH_SHORT).show();
-            }
-        });
-        requestQueue.add(stringRequest);
-        rcvData.setAdapter(adapter);
-    }
-
     public static String removeDiacriticalMarks(String string) {
         return Normalizer.normalize(string, Normalizer.Form.NFD)
                 .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
@@ -262,7 +188,7 @@ public class ListTest extends AppCompatActivity {
                     @Override
                     public void onItemClick(View view, int position) {
                         Intent intent= new Intent(ListTest.this,Test.class);
-                        intent.putExtra("keyt", dethi.get(finalZ));
+                        intent.putExtra("id", dethi.get(finalZ));
                         intent.putExtra("Uid2", uid);
                         intent.putExtra("monhoc",monhoc);
                         intent.putExtra("tende", model.text);
@@ -289,7 +215,7 @@ public class ListTest extends AppCompatActivity {
                         @Override
                         public void onItemClick(View view, int position) {
                             Intent intent= new Intent(ListTest.this,Test.class);
-                            intent.putExtra("keyt", dethi.get(finalZ));
+                            intent.putExtra("id", dethi.get(finalZ));
                             intent.putExtra("Uid2", uid);
                             intent.putExtra("monhoc",monhoc);
                             intent.putExtra("tende", model.text);
@@ -316,7 +242,7 @@ public class ListTest extends AppCompatActivity {
                                     @Override
                                     public void onItemClick(View view, int position) {
                                         Intent intent = new Intent(ListTest.this, Test.class);
-                                        intent.putExtra("keyt", dethi.get(finalZ));
+                                        intent.putExtra("id", dethi.get(finalZ));
                                         intent.putExtra("Uid2", uid);
                                         intent.putExtra("monhoc", monhoc);
                                         intent.putExtra("tende", model.text);
@@ -405,7 +331,7 @@ public class ListTest extends AppCompatActivity {
                                     @Override
                                     public void onItemClick(View view, int position) {
                                         Intent intent= new Intent(ListTest.this,Test.class);
-                                        intent.putExtra("keyt",dethi.get(finalZ));
+                                        intent.putExtra("id",dethi.get(finalZ));
                                         intent.putExtra("Uid2", uid);
                                         intent.putExtra("monhoc",monhoc);
                                         intent.putExtra("tende", model.text);
@@ -431,7 +357,7 @@ public class ListTest extends AppCompatActivity {
                                                 @Override
                                                 public void onItemClick(View view, int position) {
                                                     Intent intent = new Intent(ListTest.this, Test.class);
-                                                    intent.putExtra("keyt", dethi.get(finalZ));
+                                                    intent.putExtra("id", dethi.get(finalZ));
                                                     intent.putExtra("Uid2", uid);
                                                     intent.putExtra("monhoc", monhoc);
                                                     intent.putExtra("tende", model.text);
@@ -457,7 +383,7 @@ public class ListTest extends AppCompatActivity {
                                 @Override
                                 public void onItemClick(View view, int position) {
                                     Intent intent= new Intent(ListTest.this,Test.class);
-                                    intent.putExtra("keyt", dethi.get(finalZ));
+                                    intent.putExtra("id", dethi.get(finalZ));
                                     intent.putExtra("Uid2", uid);
                                     intent.putExtra("monhoc",monhoc);
                                     intent.putExtra("tende", model.text);

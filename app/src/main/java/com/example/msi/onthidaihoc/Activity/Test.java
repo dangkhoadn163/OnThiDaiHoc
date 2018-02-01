@@ -62,9 +62,9 @@ public class Test extends AppCompatActivity {
     NavigationView navigation;
     private RadioGroup[] rdg = new RadioGroup[50];
     String answers;
-    Integer id;
-    String monhoc="";
-    int clock;
+    int id;
+    String monhoc,uid;
+    int clock,idmonhoc;
     String scored;
     String duongdandethi,Link;
     private String mstr;
@@ -91,17 +91,18 @@ public class Test extends AppCompatActivity {
     CountDownTimer timercheck,timerstart;
     AlertDialog.Builder dialogBack;
     AlertDialog dialogfinish;
-    private RecyclerView rcvData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        monhoc = getIntent().getExtras().getString("monhoc");
+        idmonhoc = getIntent().getExtras().getInt("idmonhoc");
+        uid = getIntent().getExtras().getString("iduser");
+        answers = getIntent().getExtras().getString("dapan");
         id = getIntent().getExtras().getInt("id_dethi");
         clock=1;
         progressBar = (ProgressBar)findViewById(R.id.progressBar1);
         dialognew = new DialogStart(Test.this);
-
+        changeidmonhoc();
         anhxa();
         initquiztimescore(monhoc);
 
@@ -111,18 +112,36 @@ public class Test extends AppCompatActivity {
 //        loadnameuser(userid);
 
         getlink();
-//        loadanswer(keyt);
+//        loadanswer(id);
         autoCheck();
         Nav();
         ClickClock();
         countup();
+    }
+    public void changeidmonhoc(){
+        if(idmonhoc==1){
+            monhoc="anhvan";
+        }else if(idmonhoc==2){
+            monhoc="hoahoc";
+        }else if(idmonhoc==3){
+            monhoc="lichsu";
+        }else if(idmonhoc==4){
+            monhoc="vatly";
+        }else if(idmonhoc==5){
+            monhoc="dialy";
+        }else if(idmonhoc==6){
+            monhoc="sinhoc";
+        }else if(idmonhoc==7){
+            monhoc="toanhoc";
+        }else if(idmonhoc==8){
+            monhoc="gdcd";
+        }
     }
     public void getlink(){
         String type = "load";
         BackgroundWoker backgroundWoker = new BackgroundWoker(Test.this, new BackgroundWoker.AsyncResponse() {
             @Override
             public void processFinish(String output) {
-                Toast.makeText(Test.this, ""+output, Toast.LENGTH_SHORT).show();
                 duongdandethi=output;
                 load();
             }
@@ -152,16 +171,14 @@ public class Test extends AppCompatActivity {
             }
         }
     public void loadsaveanswers(){
-        String idquantri="1";
         String answersuser = saveanswers;
         String type = "loadsaveanswers";
         BackgroundWoker backgroundWoker = new BackgroundWoker(Test.this, new BackgroundWoker.AsyncResponse() {
             @Override
             public void processFinish(String output) {
-                Toast.makeText(Test.this, ""+output, Toast.LENGTH_SHORT).show();
             }
         });
-        backgroundWoker.execute(type, idquantri);
+        backgroundWoker.execute(type,id+"",uid,idmonhoc+"",scored,answersuser);
     }
     void autoCheck()
     {
@@ -244,6 +261,8 @@ public class Test extends AppCompatActivity {
                 loadsaveanswers();
                 Intent intent= new Intent(Test.this,Score.class);
                 intent.putExtra("id",id);
+                intent.putExtra("iduser",uid);
+                intent.putExtra("idmonhoc",idmonhoc);
                 Test.this.startActivity(intent);
             }
         });

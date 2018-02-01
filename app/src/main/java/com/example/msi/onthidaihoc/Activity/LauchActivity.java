@@ -18,7 +18,7 @@ import com.example.msi.onthidaihoc.R;
 
 public class LauchActivity extends AppCompatActivity {
     static EditText edtemailuser;
-    String checklogin;
+    String iduser;
     EditText edtpassuser;
     String encodepass;
     Button btnlogin,btnregister,btnforgetpass;
@@ -61,7 +61,7 @@ public class LauchActivity extends AppCompatActivity {
                     BackgroundWoker backgroundWoker = new BackgroundWoker(LauchActivity.this, new BackgroundWoker.AsyncResponse() {
                         @Override
                         public void processFinish(String output) {
-                            checklogin=output;
+                            iduser=output;
 /*                            Toast.makeText(LauchActivity.this, ""+output, Toast.LENGTH_SHORT).show();*/
                             changeActive();
                         }
@@ -80,8 +80,9 @@ public class LauchActivity extends AppCompatActivity {
         });
     }
     public void changeActive(){
-        if(checklogin.equals("login success !!!!! Welcome user1")){
+        if(!iduser.equals("login not success")){
             Intent i= new Intent(LauchActivity.this,ChooseActivity.class);
+            i.putExtra("iduser",iduser);
             LauchActivity.this.startActivity(i);
         }
         else {

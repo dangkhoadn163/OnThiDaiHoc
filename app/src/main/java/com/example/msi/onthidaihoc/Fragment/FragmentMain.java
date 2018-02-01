@@ -16,13 +16,14 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class FragmentMain extends Fragment {
 /*    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();*/
-    String monhoc;
+    String monhoc,uid;
     private Button btnmath, btnenglish, btnbiology, btnchemistry, btnphysic, btnedu, btnhistoty
             , btngeography;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragmentmain,container,false);
+        uid = getActivity().getIntent().getExtras().getString("iduser");
         btnenglish = (Button)view.findViewById(R.id.btn_english);
         btnphysic= (Button)view.findViewById(R.id.btn_physic);
         btnchemistry=(Button)view.findViewById(R.id.btn_chemistry);
@@ -49,6 +50,7 @@ public class FragmentMain extends Fragment {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 monhoc = "anhvan";
                 intent.putExtra("monhoc", monhoc);
+                intent.putExtra("iduser", uid);
                 getActivity().startActivity(intent);
             }
         });
@@ -72,6 +74,7 @@ public class FragmentMain extends Fragment {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 monhoc = "hoahoc";
                 intent.putExtra("monhoc", monhoc);
+                intent.putExtra("iduser", uid);
                 getActivity().startActivity(intent);
             }
         });
@@ -83,6 +86,7 @@ public class FragmentMain extends Fragment {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 monhoc = "dialy";
                 intent.putExtra("monhoc", monhoc);
+                intent.putExtra("iduser", uid);
                 getActivity().startActivity(intent);
             }
         });
@@ -94,6 +98,7 @@ public class FragmentMain extends Fragment {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 monhoc = "lichsu";
                 intent.putExtra("monhoc", monhoc);
+                intent.putExtra("iduser", uid);
                 getActivity().startActivity(intent);
             }
         });
@@ -105,6 +110,7 @@ public class FragmentMain extends Fragment {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 monhoc = "sinhhoc";
                 intent.putExtra("monhoc", monhoc);
+                intent.putExtra("iduser", uid);
                 getActivity().startActivity(intent);
             }
         });
@@ -125,6 +131,7 @@ public class FragmentMain extends Fragment {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 monhoc = "toanhoc";
                 intent.putExtra("monhoc", monhoc);
+                intent.putExtra("iduser", uid);
                 getActivity().startActivity(intent);
             }
         });
