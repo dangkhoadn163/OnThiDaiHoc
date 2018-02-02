@@ -35,8 +35,7 @@ import java.util.ArrayList;
 public class Score_Fragment extends Fragment{
     private static final String TAG = "Test";
     DrawerLayout drawer;
-    int id,idmonhoc;
-    String keyt,key;
+    int id,id2,idmonhoc,idmonhoc2;
     String duongdandethi,Link;
     String userid,uid;
     String monhoc,monhoc2,tende;
@@ -55,17 +54,17 @@ public class Score_Fragment extends Fragment{
             id = getActivity().getIntent().getExtras().getInt("id");
         }
         else {
-            key = getActivity().getIntent().getExtras().getString("keyt222");
-//            id=key;
+            id2 = getActivity().getIntent().getExtras().getInt("id_dethi");
+            id=id2;
         }
 
         idmonhoc = getActivity().getIntent().getExtras().getInt("idmonhoc");
-        if(monhoc!=null){
+        if(idmonhoc!=0){
             idmonhoc = getActivity().getIntent().getExtras().getInt("idmonhoc");
         }
         else {
-            monhoc2 = getActivity().getIntent().getExtras().getString("monhoc2");
-            monhoc=monhoc2;
+            idmonhoc2 = getActivity().getIntent().getExtras().getInt("id_monhoc");
+            idmonhoc=idmonhoc2;
         }
 
         rcvDataMoi = (RecyclerView)view.findViewById(R.id.recyclerViewImage);

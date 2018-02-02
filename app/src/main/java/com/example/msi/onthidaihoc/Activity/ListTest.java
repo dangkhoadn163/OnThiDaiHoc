@@ -122,6 +122,7 @@ public class ListTest extends AppCompatActivity {
                             intent.putExtra("id_dethi", model.id);
                             intent.putExtra("idmonhoc", idmonhoc);
                             intent.putExtra("iduser", uid);
+                            intent.putExtra("tendethi",model.ten);
                             intent.putExtra("dapan", model.dapan);
                             ListTest.this.startActivity(intent);
                         }

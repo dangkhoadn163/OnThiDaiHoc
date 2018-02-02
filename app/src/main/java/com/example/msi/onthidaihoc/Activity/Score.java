@@ -58,8 +58,7 @@ public class Score extends AppCompatActivity {
     ArrayList<String> dethi;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    int idmonhoc,id;
-    String key;
+    int idmonhoc,idmonhoc2,id,id2;
     String userid,uid;
     String useranswer;
     String quizanswers;
@@ -92,8 +91,8 @@ public class Score extends AppCompatActivity {
             id = getIntent().getExtras().getInt("id");
         }
         else {
-            key = getIntent().getExtras().getString("keyt222");
-//            id =key;
+            id2 = getIntent().getExtras().getInt("id_dethi");
+            id =id2;
         }
 
         userid = getIntent().getExtras().getString("iduser");
@@ -101,17 +100,17 @@ public class Score extends AppCompatActivity {
             userid = getIntent().getExtras().getString("iduser");
         }
         else {
-            uid = getIntent().getExtras().getString("Uid222");
+            uid = getIntent().getExtras().getString("id_user");
             userid=uid;
         }
 
         idmonhoc = getIntent().getExtras().getInt("idmonhoc");
-        if(monhoc!=null){
-            monhoc = getIntent().getExtras().getString("monhoc");
+        if(idmonhoc!=0){
+            idmonhoc = getIntent().getExtras().getInt("idmonhoc");
         }
         else {
-            monhoc2 = getIntent().getExtras().getString("monhoc2");
-            monhoc=monhoc2;
+            idmonhoc2 = getIntent().getExtras().getInt("id_monhoc");
+            idmonhoc=idmonhoc2;
         }
         anhxa();
         setidmonmySQL();

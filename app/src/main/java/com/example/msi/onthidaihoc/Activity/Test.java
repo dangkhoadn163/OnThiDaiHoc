@@ -63,7 +63,7 @@ public class Test extends AppCompatActivity {
     private RadioGroup[] rdg = new RadioGroup[50];
     String answers;
     int id;
-    String monhoc,uid;
+    String monhoc,uid,tendethi;
     int clock,idmonhoc;
     String scored;
     String duongdandethi,Link;
@@ -98,6 +98,7 @@ public class Test extends AppCompatActivity {
         idmonhoc = getIntent().getExtras().getInt("idmonhoc");
         uid = getIntent().getExtras().getString("iduser");
         answers = getIntent().getExtras().getString("dapan");
+        tendethi = getIntent().getExtras().getString("tendethi");
         id = getIntent().getExtras().getInt("id_dethi");
         clock=1;
         progressBar = (ProgressBar)findViewById(R.id.progressBar1);
@@ -112,7 +113,6 @@ public class Test extends AppCompatActivity {
 //        loadnameuser(userid);
 
         getlink();
-//        loadanswer(id);
         autoCheck();
         Nav();
         ClickClock();
@@ -178,7 +178,7 @@ public class Test extends AppCompatActivity {
             public void processFinish(String output) {
             }
         });
-        backgroundWoker.execute(type,id+"",uid,idmonhoc+"",scored,answersuser);
+        backgroundWoker.execute(type,id+"",uid,idmonhoc+"",tendethi,scored,answersuser);
     }
     void autoCheck()
     {

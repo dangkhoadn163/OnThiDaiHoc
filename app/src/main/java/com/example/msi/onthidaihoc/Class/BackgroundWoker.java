@@ -50,6 +50,7 @@ public class BackgroundWoker extends AsyncTask<String,Void,String> {
         String getmon_url = new String(Server.URL_GETMON);
         String loadanswersuser_url = new String(Server.URL_LOADANSWERUSER);
         String getketquathi_url = new String(Server.URL_GETKETQUATHI);
+        String getlistoldtest_url = new String(Server.URL_GETLISTOLDTEST);
         /*String login_url = "http://khoaduong007.000webhostapp.com/login.php";
         String register_url = "https://khoaduong007.000webhostapp.com/register.php";
         String load_url = "http://khoaduong007.000webhostapp.com/duongdandendethi.php";
@@ -220,6 +221,39 @@ public class BackgroundWoker extends AsyncTask<String,Void,String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else if(type.equals("getlistoldtest")){
+            try {
+                String id_user = params[1];
+                String id_monhoc = params[2];
+                URL url = new URL(getlistoldtest_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("id_user","UTF-8")+"="+URLEncoder.encode(id_user,"UTF-8")+"&"
+                        +URLEncoder.encode("id_monhoc","UTF-8")+"="+URLEncoder.encode(id_monhoc,"UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                String result="";
+                String line="";
+                while((line = bufferedReader.readLine())!= null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }else if(type.equals("getketquathi")){
             try {
                 String id_dethi = params[1];
@@ -260,8 +294,9 @@ public class BackgroundWoker extends AsyncTask<String,Void,String> {
                 String id = params[1];
                 String uid = params[2];
                 String monhoc = params[3];
-                String scored = params[4];
-                String answeruser = params[5];
+                String tendethi = params[4];
+                String scored = params[5];
+                String answeruser = params[6];
                 URL url = new URL(loadanswersuser_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -272,6 +307,7 @@ public class BackgroundWoker extends AsyncTask<String,Void,String> {
                 String post_data = URLEncoder.encode("id","UTF-8")+"="+URLEncoder.encode(id,"UTF-8")+"&"
                         +URLEncoder.encode("uid","UTF-8")+"="+URLEncoder.encode(uid,"UTF-8")+"&"
                         +URLEncoder.encode("monhoc","UTF-8")+"="+URLEncoder.encode(monhoc,"UTF-8")+"&"
+                        +URLEncoder.encode("tendethi","UTF-8")+"="+URLEncoder.encode(tendethi,"UTF-8")+"&"
                         +URLEncoder.encode("scored","UTF-8")+"="+URLEncoder.encode(scored,"UTF-8")+"&"
                         +URLEncoder.encode("answeruser","UTF-8")+"="+URLEncoder.encode(answeruser,"UTF-8");
                 bufferedWriter.write(post_data);

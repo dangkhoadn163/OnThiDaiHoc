@@ -45,14 +45,14 @@ public class FragmentReview extends Fragment {
     }
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-/*        adapter.addFrag(new MathFragment(), "Toán");
+        adapter.addFrag(new MathFragment(), "Toán");
         adapter.addFrag(new EnglishFragment(), "Anh văn");
         adapter.addFrag(new PhysicFragment(), "Vật lý");
         adapter.addFrag(new ChemistryFragment(), "Hóa học");
         adapter.addFrag(new HistoryFragment(), "Lịch sử");
         adapter.addFrag(new GeographyFragment(), "Địa lý");
         adapter.addFrag(new EducationFragment(), "GDCD");
-        adapter.addFrag(new BiologyFragment(), "Sinh học");*/
+        adapter.addFrag(new BiologyFragment(), "Sinh học");
         viewPager.setAdapter(adapter);
     }
 
