@@ -6,7 +6,6 @@ package com.example.msi.onthidaihoc.Class;
 
 
 public class Server {
-    //    public static String localhost= "192.168.43.120";
     public static String localhost= "192.168.100.6:81";
     public static String URL_LOGIN = "http://" + localhost + "/onthidh/login.php";
     public static String URL_REGISTER = "http://" + localhost + "/onthidh/register.php";

@@ -298,7 +298,8 @@ public class Score extends AppCompatActivity {
             case R.id.mnSetting:
                 Intent intent= new Intent(Score.this,ChooseActivity.class);
 //                intent.putExtra("monhoc",monhoc);
-                intent.putExtra("uid", userid);
+//              key put phải trùng vs key bên ActivityChoose
+                intent.putExtra("iduser", userid);
                 Score.this.startActivity(intent);
                 break;
             case android.R.id.home:
