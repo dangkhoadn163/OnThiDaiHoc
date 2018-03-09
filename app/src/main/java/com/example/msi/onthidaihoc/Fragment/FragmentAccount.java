@@ -12,17 +12,20 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.msi.onthidaihoc.Activity.RegisterActivity;
+import com.example.msi.onthidaihoc.Activity.Score;
+import com.example.msi.onthidaihoc.Class.BackgroundWoker;
+import com.example.msi.onthidaihoc.Class.RegularExpressions;
 import com.example.msi.onthidaihoc.R;
 import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
 import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -42,10 +45,10 @@ public class FragmentAccount extends Fragment {
     String schooluser="";
     String addressuser="";
     String phoneuser="";
+    String gradleuser="";
+    String info;
     private SimpleDateFormat mFormatter = new SimpleDateFormat("MMMM dd yyyy hh:mm aa");
     private Button mButton;
-/*    private FirebaseAuth mAuth;*/
-    private DatabaseReference mDatabase;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,13 +71,11 @@ public class FragmentAccount extends Fragment {
         imgbBirth=(ImageButton)view.findViewById(R.id.btn_editbirth);
 
 
-        uid = getActivity().getIntent().getExtras().getString("Uid");
-/*        mAuth = FirebaseAuth.getInstance();*/
-        // Lay duong dan cua note goc tren database:
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        load();
+        uid = getActivity().getIntent().getExtras().getString("iduser");
         click();
+
         btnSave();
+        getinfouser();
         btnCancel();
         return view;//super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -149,153 +150,76 @@ public class FragmentAccount extends Fragment {
                     "Canceled", Toast.LENGTH_SHORT).show();
         }
     };
-
-    public void datauser(){
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+    public void getinfouser(){
+        String type ="infouser";
+        BackgroundWoker backgroundWoker=new BackgroundWoker(getActivity(), new BackgroundWoker.AsyncResponse() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                nameuser= editName.getText().toString();
-                schooluser= editSchool.getText().toString();
-                classuser= editClass.getText().toString();
-                addressuser=editAddress.getText().toString();
-                phoneuser=editPhone.getText().toString();
-                mDatabase.child("account").child(uid).child("name").setValue(nameuser).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                    }
-                });
-                mDatabase.child("account").child(uid).child("school").setValue(schooluser).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                    }
-                });
-                mDatabase.child("account").child(uid).child("class").setValue(classuser).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                    }
-                });
-                mDatabase.child("account").child(uid).child("address").setValue(addressuser).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                    }
-                });
-                mDatabase.child("account").child(uid).child("phone").setValue(phoneuser).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+            public void processFinish(String output) {
+                info=output;
+                Log.d("infomation",""+info);
+                loadinfouser();
             }
         });
+        backgroundWoker.execute(type,uid);
     }
-
+    public void loadinfouser(){
+        for (int i = 0; i < info.length(); i++) {
+            if (info != null) {
+                try {
+                    JSONArray jsonArray = new JSONArray(info);
+                    JSONObject index = jsonArray.getJSONObject(i);
+                    nameuser = index.getString("Tenuser");
+                    schooluser = index.getString("Truong");
+                    classuser = index.getString("Lop");
+                    addressuser = index.getString("Diachi");
+                    phoneuser = index.getString("Sdt");
+                    gradleuser = index.getString("Khoi");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                load();
+            }
+            else{
+                Toast.makeText(getActivity(), "Không có dữ liệu!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
     public void btnSave(){
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View view) {
-                datauser();
+                    String ten = editName.getText().toString();
+                    String truong = editSchool.getText().toString();
+                    String lop = editClass.getText().toString();
+                    String diachi = editAddress.getText().toString();
+                    String sdt = editPhone.getText().toString();
+                    String khoi = editGrade.getText().toString();
+                    String type = "editinfo";
+                    BackgroundWoker backgroundWoker = new BackgroundWoker(getActivity(), new BackgroundWoker.AsyncResponse() {
+                        @Override
+                        public void processFinish(String output) {
+                            Toast.makeText(getActivity(), ""+output, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    backgroundWoker.execute(type, ten, truong, lop, diachi, sdt,khoi,uid);
+                getinfouser();
             }
         });
     }
     public void load(){
-        mDatabase.child("account").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("name")) {
-                    nameuser = dataSnapshot.child("name").getValue().toString();
-                    if(nameuser!=null){
-                        editName.setText(nameuser);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        mDatabase.child("account").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("school")) {
-                    schooluser = dataSnapshot.child("school").getValue().toString();
-                    if(schooluser!=null){
-                        editSchool.setText(schooluser);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        mDatabase.child("account").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("class")) {
-                    classuser = dataSnapshot.child("class").getValue().toString();
-                    if(classuser!=null){
-                        editClass.setText(classuser);
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-        mDatabase.child("account").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("address")) {
-                    addressuser = dataSnapshot.child("address").getValue().toString();
-                    if(addressuser!=null){
-                        editAddress.setText(addressuser);
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-        mDatabase.child("account").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("phone")) {
-                    phoneuser = dataSnapshot.child("phone").getValue().toString();
-                    if(phoneuser!=null){
-                        editPhone.setText(phoneuser);
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+        editName.setText(nameuser);
+        editSchool.setText(schooluser);
+        editClass.setText(classuser);
+        editAddress.setText(addressuser);
+        editPhone.setText(phoneuser);
+        editGrade.setText(gradleuser);
+        editName.setEnabled(false);
+        editSchool.setEnabled(false);
+        editClass.setEnabled(false);
+        editAddress.setEnabled(false);
+        editPhone.setEnabled(false);
+        editGrade.setEnabled(false);
     }
     public void btnCancel(){
         btnCancel.setOnClickListener(new View.OnClickListener() {

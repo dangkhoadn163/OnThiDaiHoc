@@ -62,7 +62,7 @@ public class LauchActivity extends AppCompatActivity {
                         @Override
                         public void processFinish(String output) {
                             iduser=output;
-/*                            Toast.makeText(LauchActivity.this, ""+output, Toast.LENGTH_SHORT).show();*/
+                            Toast.makeText(LauchActivity.this, ""+output, Toast.LENGTH_SHORT).show();
                             changeActive();
                         }
                     });

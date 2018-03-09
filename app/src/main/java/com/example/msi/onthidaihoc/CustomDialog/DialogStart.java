@@ -38,9 +38,6 @@ public class DialogStart {
         this.txvThoat = (TextView) view.findViewById(R.id.dialog_start_thoat);
         this.txvThi = (TextView) view.findViewById(R.id.dialog__start_thi);
     }
-
-
-
     public void show() {
 
         builder.setView(view);

@@ -6,9 +6,11 @@ package com.example.msi.onthidaihoc.Class;
 
 
 public class Server {
-    public static String localhost= "192.168.100.6:81";
+    public static String localhost= "192.168.1.112:81";
     public static String URL_LOGIN = "http://" + localhost + "/onthidh/login.php";
+    public static String URL_INFO = "http://" + localhost + "/onthidh/getinfouser.php";
     public static String URL_REGISTER = "http://" + localhost + "/onthidh/register.php";
+    public static String URL_EDITINFO = "http://" + localhost + "/onthidh/editinfo.php";
     public static String URL_LOAD = "http://" + localhost + "/onthidh/duongdandendethi.php";
     public static String URL_GETMON = "http://" + localhost + "/onthidh/getnametest.php";
     public static String URL_LOADANSWERUSER = "http://" + localhost + "/onthidh/ketquathi.php";
