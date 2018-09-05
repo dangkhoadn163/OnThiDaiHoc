@@ -91,7 +91,7 @@ public class ListTest extends AppCompatActivity {
         backgroundWoker.execute(type,idmonhoc+"");
     }
     public void load(){
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
         for (int i = 0; i < dethimon.length(); i++) {
             if (dethimon != null) {
                 try {
@@ -103,7 +103,7 @@ public class ListTest extends AppCompatActivity {
                     Nam_dethi = index.getString("Nam");
                     Lan_dethi = index.getString("Lan");
                     Dapan_dethi = index.getString("Dapan");
-                    MyFileViewHolder viewHolder;
+//                    MyFileViewHolder viewHolder;
                     final MyFile model = new MyFile();
                     model.id = Id_dethi;
                     model.ten = Ten_dethi;

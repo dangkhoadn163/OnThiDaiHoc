@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "D:\\AndroidStudio\\OnThiDaiHoc\\slideDateTimePicker\\build\\intermediates\\res\\merged\\release\\layout\\fragment_date.xml",
+        "source": "D:\\AndroidStudio\\OnThiDaiHoc\\slideDateTimePicker\\src\\main\\res\\layout\\fragment_date.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudio\\OnThiDaiHoc\\slideDateTimePicker\\build\\intermediates\\res\\merged\\release\\layout\\fragment_time.xml",
+        "source": "D:\\AndroidStudio\\OnThiDaiHoc\\slideDateTimePicker\\src\\main\\res\\layout\\fragment_time.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudio\\OnThiDaiHoc\\slideDateTimePicker\\build\\intermediates\\res\\merged\\release\\layout\\slide_date_time_picker.xml",
+        "source": "D:\\AndroidStudio\\OnThiDaiHoc\\slideDateTimePicker\\src\\main\\res\\layout\\slide_date_time_picker.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudio\\OnThiDaiHoc\\slideDateTimePicker\\build\\intermediates\\res\\merged\\release\\layout\\custom_tab.xml",
+        "source": "D:\\AndroidStudio\\OnThiDaiHoc\\slideDateTimePicker\\src\\main\\res\\layout\\custom_tab.xml"
+    }
+]

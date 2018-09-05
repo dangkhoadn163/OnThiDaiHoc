@@ -47,7 +47,7 @@ public class MoiAdapter extends RecyclerView.Adapter<MoiAdapter.ViewHolder> {
     public void load(String url, ViewHolder holder)
     {
 // Hide progress bar on successful load
-        Picasso.with(mContext).load(url)
+        /*Picasso.with(mContext).load(url)
                 .placeholder(R.drawable.noimage)
                 .into(holder.item_image, new com.squareup.picasso.Callback() {
                     @Override
@@ -60,7 +60,9 @@ public class MoiAdapter extends RecyclerView.Adapter<MoiAdapter.ViewHolder> {
                     public void onError() {
 
                     }
-                });
+                });*/
+        Picasso.get().load(url).into(holder.item_image);
+
 
     }
     @Override

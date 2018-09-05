@@ -187,7 +187,6 @@ public class FragmentAccount extends Fragment {
     public void btnSave(){
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
-
             public void onClick(View view) {
                     String ten = editName.getText().toString();
                     String truong = editSchool.getText().toString();

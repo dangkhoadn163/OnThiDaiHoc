@@ -2,8 +2,11 @@ package com.example.msi.onthidaihoc.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +20,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.msi.onthidaihoc.CustomDialog.ChangepassDiaglog;
@@ -34,11 +36,14 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.example.msi.onthidaihoc.CustomDialog.Constant.IMAGE_REQUEST_CODE;
-import static com.example.msi.onthidaihoc.CustomDialog.FirebaseController.uploadAvatar;
+import static com.example.msi.onthidaihoc.CustomDialog.Controller.downloadAvatar;
+import static com.example.msi.onthidaihoc.CustomDialog.Controller.uploadAvatar;
 
 
-public class ChooseActivity extends AppCompatActivity {
-    String uid;
+public class ChooseActivity extends AppCompatActivity{
+
+    String uid,test;
+    Bitmap bitmap;
     DrawerLayout drawer;
     Toolbar toolbar;
     NavigationView navigation;
@@ -49,28 +54,33 @@ public class ChooseActivity extends AppCompatActivity {
     private LogoutDialog logoutDialog;
     private Context context;
     private Uri imageUri;
-/*    private FirebaseAuth mAuth;
-    private DatabaseReference rootDatabase;
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();*/
 
     //Header-Nav
-    private CircleImageView iv_picture;
+    private static CircleImageView iv_picture;
     private TextView tv_name;
     private TextView tv_email;
+
+    public static ChooseActivity chooseActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose);
+
+        chooseActivity = this;
+
         uid = getIntent().getExtras().getString("iduser");
-/*        mAuth = FirebaseAuth.getInstance();
-        rootDatabase = FirebaseDatabase.getInstance().getReference();
-        uid = getIntent().getExtras().getString("Uid");*/
+        ghi();
         anhxa();
         nav();
 /*        loadnameuser(uid);*/
 
-
+    }
+    public void ghi(){
+        SharedPreferences ghi=getSharedPreferences("uid",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=ghi.edit();
+        editor.putString("uid",uid);
+        editor.commit();
     }
     private void anhxa() {
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -133,7 +143,7 @@ public class ChooseActivity extends AppCompatActivity {
                     .setMaxCropResultSize(500,500) // kích thước cắt tối đa: 500x500 pixel
                     .setMinCropWindowSize(50, 50) // kích thước cắt tối thiểu: 50x50 pixel
                     .setBackgroundColor(R.color.colorWhite) // tự hiểu
-                    .start(this); // tự hiểu
+                    .start(this);
         }
 
         // Nếu nhận <ActivityResult> từ activity CẮT ẢNH
@@ -143,10 +153,17 @@ public class ChooseActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Lấy đường dẫn
                 imageUri = result.getUri();
+                Log.d("imageUri",""+imageUri);
                 // Đóng dialog mở lên lúc nãy
                 customDialog.dismiss();
-                // upload Avatar lên firebase
-                uploadAvatar(context, uid, imageUri);// Xem bên class FirebaseController
+                try {
+//                    imageUri = data.getData();
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                }catch (Exception e){
+                    Log.d("Loi uri",""+e);
+                }
+                // upload Avatar lên
+                uploadAvatar(context,uid,bitmap);// Xem bên class
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 // nếu xảy ra lỗi thì cũng đóng dialog luôn:
                 customDialog.dismiss();
@@ -174,19 +191,16 @@ public class ChooseActivity extends AppCompatActivity {
                 openCustomDialog();
             }
         });
-/*        rootDatabase.child("account").child(uid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = new User();
-                user = dataSnapshot.getValue(User.class);
-                Picasso.with(ChooseActivity.this).load(user.avatar).into(iv_picture);
-            }
+        //load avatar
+        downloadAvatar(context,uid);
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });*/
+
+/*        User user = new User();
+        user = downloadAvatar(context,uid).getValue(User.class);
+        Picasso.with(ChooseActivity.this).load(downloadAvatar(context,uid)).into(iv_picture);*/
+
+
 
         navigation=(NavigationView)findViewById(R.id.navview);
         navigation.setCheckedItem(R.id.nav_first_fragment);
@@ -199,6 +213,11 @@ public class ChooseActivity extends AppCompatActivity {
             }
         });
     }
+
+    public static void setImage(Bitmap bitmap){
+        iv_picture.setImageBitmap(bitmap);
+    }
+
     void xulychonmenu(MenuItem menuItem)
     {
         int id=menuItem.getItemId();

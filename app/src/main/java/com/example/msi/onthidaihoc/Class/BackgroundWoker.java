@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.StringRequest;
@@ -53,6 +54,10 @@ public class BackgroundWoker extends AsyncTask<String,Void,String> {
         String loadanswersuser_url = new String(Server.URL_LOADANSWERUSER);
         String getketquathi_url = new String(Server.URL_GETKETQUATHI);
         String getlistoldtest_url = new String(Server.URL_GETLISTOLDTEST);
+        String remember_url = new String(Server.URL_REMEMBER);
+        String changepass_url = new String(Server.URL_CHANGEPASS);
+        String upavatar_url = new String(Server.URL_UPAVATAR);
+        String downavatar_url = new String(Server.URL_DOWNAVATAR);
         /*String login_url = "http://khoaduong007.000webhostapp.com/login.php";
         String register_url = "https://khoaduong007.000webhostapp.com/register.php";
         String load_url = "http://khoaduong007.000webhostapp.com/duongdandendethi.php";
@@ -171,6 +176,73 @@ public class BackgroundWoker extends AsyncTask<String,Void,String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else if(type.equals("changepass")) {
+            try {
+                String id_user = params[1];
+                String pass_user = params[2];
+                URL url = new URL(changepass_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("pass_user","UTF-8")+"="+URLEncoder.encode(pass_user,"UTF-8")+"&"
+                        +URLEncoder.encode("id_user","UTF-8")+"="+URLEncoder.encode(id_user,"UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                String result="";
+                String line="";
+                while((line = bufferedReader.readLine())!= null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(type.equals("uploadavatar")) {
+            try {
+                String id_user = params[1];
+                String avatar_user = params[2];
+                URL url = new URL(upavatar_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("avatar_user","UTF-8")+"="+URLEncoder.encode(avatar_user,"UTF-8")+"&"
+                        +URLEncoder.encode("id_user","UTF-8")+"="+URLEncoder.encode(id_user,"UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                String result="";
+                String line="";
+                while((line = bufferedReader.readLine())!= null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }else if(type.equals("load")) {
             try {
                 String id_dethi = params[1];
@@ -182,6 +254,68 @@ public class BackgroundWoker extends AsyncTask<String,Void,String> {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String post_data = URLEncoder.encode("id_dethi","UTF-8")+"="+URLEncoder.encode(id_dethi,"UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                String result="";
+                String line="";
+                while((line = bufferedReader.readLine())!= null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if(type.equals("remember")) {
+            try {
+                String id_user = params[1];
+                URL url = new URL(remember_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("id_user","UTF-8")+"="+URLEncoder.encode(id_user,"UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                String result="";
+                String line="";
+                while((line = bufferedReader.readLine())!= null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if(type.equals("downloadavatar")) {
+            try {
+                String id_user = params[1];
+                URL url = new URL(downavatar_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("id_user","UTF-8")+"="+URLEncoder.encode(id_user,"UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -412,13 +546,15 @@ public class BackgroundWoker extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPreExecute() {
-        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+/*        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();*/
+        Log.d("done","success");
     }
 
     @Override
     protected void onPostExecute(String result) {
         delegate.processFinish(result);
-        Toast.makeText(context, "php trả kết quả: "+result, Toast.LENGTH_SHORT).show();
+        /*Toast.makeText(context, "php trả kết quả: "+result, Toast.LENGTH_SHORT).show();*/
+        Log.d("php","php trả kết quả: "+result);
     }
 
     @Override

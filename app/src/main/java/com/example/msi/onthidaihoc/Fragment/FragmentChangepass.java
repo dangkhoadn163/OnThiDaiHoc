@@ -13,15 +13,17 @@ import android.widget.EditText;
 import com.example.msi.onthidaihoc.Activity.MainActivity;
 import com.example.msi.onthidaihoc.CustomDialog.ChangepassDiaglog;
 import com.example.msi.onthidaihoc.R;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
 /**
  * Created by DK on 11/1/2017.
  */
 
+
+//--------------------------- Đã dùng dialog thay cho Activity-----------------------------------------------
+
+
 public class FragmentChangepass extends Fragment {
-//    private FirebaseAuth mAuth;
     private DatabaseReference rootDatabase;
     String uid;
     String monhoc;
@@ -29,7 +31,6 @@ public class FragmentChangepass extends Fragment {
     private Button btnconfirm;
     private EditText edtoldpass,edtnewpass,edtconfirm;
     private ChangepassDiaglog changepassDiaglog;
-//    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class FragmentChangepass extends Fragment {
         edtnewpass = (EditText) view.findViewById(R.id.edt_newpass);
         edtconfirm = (EditText) view.findViewById(R.id.edt_confirm);
 
-
+        // Đã dùng dialog thay cho Activity
 /*       btnconfirm.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
